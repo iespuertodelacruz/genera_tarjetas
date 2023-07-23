@@ -6,9 +6,13 @@
 </head>
 
 <body>
-    <div id="contenido">
-        {{ nombre }}
-    </div>
+    <div class="nombre">{{ student["Nombre"] }} {{ student["Primer apellido"] }} {{ student["Segundo apellido"] }}</div>
+
+    <!-- Partes fijas -->
+    <div class="curso_escolar">Curso<br>{{ school_year }}</div>
+    <img class="fondo" src="{{ project_dir }}/assets/img/triada.png" />
+    <img class="logo_consejeria" src=" {{ project_dir }}/assets/img/logo_consejeria.png" />
+    <img class="logo_centro" src="{{ project_dir }}/assets/img/logo_centro.png" />
 </body>
 
 </html>

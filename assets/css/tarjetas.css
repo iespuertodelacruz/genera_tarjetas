@@ -1,3 +1,124 @@
+@font-face {
+  font-family: "Helvetica";
+  src: url("../fonts/Helvetica/Helvetica.ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Helvetica";
+  src: url("../fonts/Helvetica/Helvetica-Bold.ttf");
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Helvetica";
+  src: url("../fonts/Helvetica/Helvetica-Oblique.ttf");
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Helvetica";
+  src: url("../fonts/Helvetica/Helvetica-BoldOblique.ttf");
+  font-weight: bold;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Helvetica";
+  src: url("../fonts/Helvetica/Helvetica-Light.ttf");
+  font-weight: 100;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "VictorMono";
+  src: url("../fonts/VictorMono/VictorMono-Regular.ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "VictorMono";
+  src: url("../fonts/VictorMono/VictorMono-Bold.ttf");
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "VictorMono";
+  src: url("../fonts/VictorMono/VictorMono-Oblique.ttf");
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "VictorMono";
+  src: url("../fonts/VictorMono/VictorMono-BoldOblique.ttf");
+  font-weight: bold;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "VictorMono";
+  src: url("../fonts/VictorMono/VictorMono-Light.ttf");
+  font-weight: 100;
+  font-style: normal;
+}
+
+@page {
+  size: 85mm 54mm;
+  margin: 3mm;
+  padding: 0;
+  border: 0;
+}
+
 html {
-  color: red;
+  font-family: "Helvetica";
+}
+
+div.curso_escolar {
+  position: absolute;
+  left: 0;
+  top: -1mm;
+  font-size: 10pt;
+  line-height: 3.5mm;
+  border-left: 1mm solid #e74c3c;
+  color: #5d6d7e;
+  padding-left: 1mm;
+}
+
+img.fondo {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  bottom: 0;
+  z-index: -1;
+}
+
+img.logo_centro {
+  width: 25mm;
+  position: absolute;
+  left: 29mm;
+  bottom: 0;
+}
+
+img.logo_consejeria {
+  width: 25mm;
+  position: absolute;
+  left: 0mm;
+  bottom: 0;
+}
+
+div.nombre {
+  position: absolute;
+  left: 0;
+  top: 7mm;
+  width: 80mm;
+  height: 5mm;
+  overflow: hidden;
+  font-size: 11pt;
+  font-weight: bold;
 }
