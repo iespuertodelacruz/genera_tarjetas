@@ -1,0 +1,6 @@
+*.pyc
+prince
+output
+data
+.DS_Store
+.python-version
