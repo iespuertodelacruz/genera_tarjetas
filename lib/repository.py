@@ -10,29 +10,47 @@ class Student:
     def __init__(self, data: dict[str, str]):
         self.data = data
 
+    @staticmethod
+    def fix_empty_field(default_output=settings.EMPTY_FIELD_PLACEHOLDER):
+        def decorator(method):
+            def wrapper(self, *args, **kwargs):
+                if result := method(self, *args, **kwargs):
+                    return result
+                return default_output
+
+            return wrapper
+
+        return decorator
+
     @property
+    @fix_empty_field()
     def cial(self):
-        return self.data.get('CIAL', settings.EMPTY_FIELD_PLACEHOLDER)
+        return self.data['CIAL']
 
     @property
+    @fix_empty_field()
     def exp(self):
-        return self.data.get('Expediente', settings.EMPTY_FIELD_PLACEHOLDER)
+        return self.data['Expediente']
 
     @property
+    @fix_empty_field()
     def id(self):
-        return self.data.get('NIF - NIE', settings.EMPTY_FIELD_PLACEHOLDER)
+        return self.data['NIF - NIE']
 
     @property
+    @fix_empty_field()
     def name(self):
-        return self.data.get('Nombre', '')
+        return self.data['Nombre']
 
     @property
+    @fix_empty_field()
     def surname1(self):
-        return self.data.get('Primer apellido', '')
+        return self.data['Primer apellido']
 
     @property
+    @fix_empty_field('')
     def surname2(self):
-        return self.data.get('Segundo apellido', '')
+        return self.data['Segundo apellido']
 
     @property
     def surname(self):
@@ -45,8 +63,9 @@ class Student:
         return f'{self.name} {self.surname}'.title()
 
     @property
+    @fix_empty_field()
     def date_of_birth(self):
-        return self.data.get('Fecha de nacimiento', settings.EMPTY_FIELD_PLACEHOLDER)
+        return self.data['Fecha de nacimiento']
 
     @property
     def calculated_age(self):
@@ -56,7 +75,7 @@ class Student:
 
     @property
     def age(self) -> int | str:
-        if dage := self.data.get('Edad'):
+        if dage := self.data['Edad']:
             return int(dage)
         return settings.EMPTY_FIELD_PLACEHOLDER
 
@@ -64,29 +83,56 @@ class Student:
         return self.age >= 18
 
     @property
+    @fix_empty_field()
     def study(self):
-        return self.data.get('Estudio den. corta', settings.EMPTY_FIELD_PLACEHOLDER)
+        return self.data['Estudio den. corta']
 
     @property
+    @fix_empty_field()
     def group(self):
-        return self.data.get('Grupo Clase', settings.EMPTY_FIELD_PLACEHOLDER)
+        return self.data['Grupo Clase']
 
     @property
+    @fix_empty_field()
+    def gender(self):
+        return self.data['Sexo']
+
+    @property
+    @fix_empty_field()
     def shift(self):
-        return self.data.get('Turnos', settings.EMPTY_FIELD_PLACEHOLDER)
+        return self.data['Turnos']
 
     @property
-    def cshift(self):
+    def short_shift(self):
         return self.shift[0].upper()
 
     @property
+    @fix_empty_field()
+    def long_shift(self):
+        match self.short_shift:
+            case 'M':
+                return 'Turno de mañana'
+            case 'T':
+                return 'Turno de tarde'
+            case 'N':
+                return 'Turno de noche'
+            case _:
+                return ''
+
+    @property
+    @fix_empty_field()
     def list_number(self):
-        return self.data['Nº Lista'] or settings.EMPTY_FIELD_PLACEHOLDER
+        return self.data['Nº Lista']
 
     @property
     def pic(self):
-        # return settings.PROFILE_PICS_PATH / (self.exp + '.jpg')
-        return settings.PROFILE_PICS_PATH / 'pic.jpg'
+        if (pic_path := settings.PROFILE_PICS_PATH / (self.exp + '.jpg')).exists():
+            return pic_path
+        elif self.gender == 'V':
+            pic_path = settings.ASSETS_IMG_DIR / settings.UNKNOWN_MAN_PROFILE_PIC
+        else:
+            pic_path = settings.ASSETS_IMG_DIR / settings.UNKNOWN_WOMAN_PROFILE_PIC
+        return pic_path
 
 
 class StudentRepository:

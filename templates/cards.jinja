@@ -15,17 +15,21 @@
         {% if student.is_adult() %}
         <div class="adult">&gt;18</div>
         {% endif %}
-        <div class="shift">Turno<br>{{ student.shift }}</div>
+        <div class="shift">{{ student.long_shift }}</div>
 
         <div class="name">{{ student.fullname }}</div>
         <div class="cial"><strong>CIAL </strong>{{ student.cial }}</div>
         <div class="exp"><strong>EXP: </strong> {{ student.exp }}</div>
         <div class="id">{{ student.id }}</div>
-        <div class="date-of-birth"><strong>NAC: </strong>{{ student.date_of_birth }} ({{ student.age }} años)</div>
+        <div class="date-of-birth"><strong>NAC: </strong>{{ student.date_of_birth }}</div>
         <div class="list-number"><strong>NLIS </strong>{{ student.list_number }}</div>
         <div class="study">{{ student.study }}</div>
 
-        <img class="profile-pic" src="{{ student.pic }}" />
+        <div class="profile-pic-wrapper">
+            <div class="profile-pic">
+                <img src="{{ student.pic }}" />
+            </div>
+        </div>
 
         <img class="background" src="{{ project_dir }}/assets/img/background.png" />
         <img class="edu-logo" src=" {{ project_dir }}/assets/img/edu_logo.svg" />

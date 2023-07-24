@@ -88,13 +88,15 @@ div.adult {
 div.name {
   position: absolute;
   left: 0;
-  top: 9mm;
+  top: 8.5mm;
   font-size: 11pt;
+  line-height: 12pt;
   font-weight: bold;
   width: 60mm;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
+  padding-top: 0.5mm;
 }
 
 div.cial {
@@ -115,13 +117,14 @@ div.exp {
 
 div.shift {
   position: absolute;
-  left: 35mm;
-  top: 14mm;
+  right: 0;
+  bottom: 17mm;
   line-height: 3.5mm;
-  font-size: 10pt;
-  border-left: 1mm solid green;
+  font-size: 9pt;
+  border-right: 1mm solid yellowgreen;
+  padding-right: 1mm;
   color: #5d6d7e;
-  padding-left: 1mm;
+  text-align: right;
 }
 
 div.id {
@@ -136,9 +139,9 @@ div.id {
 div.study {
   position: absolute;
   left: 0;
-  top: 35mm;
+  top: 36mm;
   font-size: 7pt;
-  width: 60mm;
+  width: 62mm;
   color: #5d6d7e;
 }
 
@@ -158,11 +161,30 @@ div.list-number {
   font-family: "VictorMono";
 }
 
-img.profile-pic {
+div.profile-pic-wrapper {
   position: absolute;
   right: 0mm;
   top: 0mm;
+  margin: 0;
   width: 18mm;
-  /* https://www.cssmatic.com/box-shadow */
-  box-shadow: 0px 4px 5px 0px rgba(0, 0, 0, 0.75);
+  height: 23.5mm;
+}
+
+div.profile-pic {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+  position: relative;
+  border: 0.5mm solid #5d6d7e;
+}
+
+div.profile-pic img {
+  width: 100%;
+  position: absolute;
+  top: -100%;
+  left: 0;
+  right: 0;
+  bottom: -100%;
+  margin: auto;
 }
