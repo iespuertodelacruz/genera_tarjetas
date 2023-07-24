@@ -1,0 +1,145 @@
+@page {
+  size: 85mm 54mm;
+  margin-left: 3mm;
+  margin-right: 3mm;
+  margin-top: 2mm;
+  margin-bottom: 2mm;
+  padding: 0;
+  border: 0;
+}
+
+html {
+  font-family: "Helvetica";
+}
+
+img.background {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  bottom: 0;
+  z-index: -1;
+}
+img.edu-logo {
+  width: 28mm;
+  position: absolute;
+  left: 0mm;
+  bottom: 0;
+}
+
+img.ies-logo {
+  width: 25mm;
+  position: absolute;
+  left: 30mm;
+  bottom: 0;
+}
+
+div.school-year {
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-size: 10pt;
+  line-height: 3.5mm;
+  border-left: 1mm solid purple;
+  color: #5d6d7e;
+  padding-left: 1mm;
+}
+
+div.group {
+  position: absolute;
+  left: 20mm;
+  top: 0;
+  font-size: 13pt;
+  font-weight: bold;
+  background-color: purple;
+  color: white;
+  padding-top: 2mm;
+  padding-bottom: 1mm;
+  padding-left: 2mm;
+  padding-right: 2mm;
+  border-radius: 1mm;
+}
+
+div.name {
+  position: absolute;
+  left: 0;
+  top: 9mm;
+  width: 80mm;
+  overflow: hidden;
+  font-size: 11pt;
+  font-weight: bold;
+}
+
+div.cial {
+  position: absolute;
+  left: 0;
+  top: 13mm;
+  font-size: 10pt;
+  font-family: "VictorMono";
+}
+
+div.exp {
+  position: absolute;
+  left: 0;
+  top: 17mm;
+  font-size: 10pt;
+  font-family: "VictorMono";
+}
+
+div.shift {
+  position: absolute;
+  left: 35mm;
+  top: 14mm;
+  line-height: 3.5mm;
+  font-size: 10pt;
+  border-left: 1mm solid green;
+  color: #5d6d7e;
+  padding-left: 1mm;
+}
+
+div.id {
+  position: absolute;
+  left: 0;
+  top: 21mm;
+  font-size: 10pt;
+  font-family: "VictorMono";
+}
+
+div.study {
+  position: absolute;
+  left: 0;
+  top: 27mm;
+  font-size: 8pt;
+  color: #5d6d7e;
+}
+
+div.date-of-birth {
+  position: absolute;
+  left: 0;
+  top: 33mm;
+  font-size: 10pt;
+  font-family: "VictorMono";
+}
+
+div.list-number {
+  position: absolute;
+  left: 0;
+  top: 37mm;
+  font-size: 10pt;
+  font-family: "VictorMono";
+}
+
+img.adult {
+  position: absolute;
+  bottom: 0mm;
+  right: 0;
+  width: 15mm;
+}
+
+img.profile-pic {
+  position: absolute;
+  right: 0mm;
+  top: 0mm;
+  width: 18mm;
+  /* https://www.cssmatic.com/box-shadow */
+  box-shadow: 0px 4px 5px 0px rgba(0, 0, 0, 0.75);
+}

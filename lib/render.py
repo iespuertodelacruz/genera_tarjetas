@@ -23,7 +23,7 @@ class TemplateEngine:
 
     def render(
         self,
-        template_name: str,
+        template_name: str = settings.CARD_TEMPLATE_NAME,
         output_filename: str = '',
         output_suffix: str = settings.OUTPUT_SUFFIX,
         **args,
