@@ -12,7 +12,7 @@
         <div class="school-year">Curso<br>{{ school_year }}</div>
         <div class="title">ALUMNADO</div>
         <div class="group">{{ student.group }}</div>
-        {% if student.is_adult() %}
+        {% if student.adult %}
         <div class="adult">&gt;18</div>
         {% endif %}
         <div class="shift">{{ student.long_shift }}</div>

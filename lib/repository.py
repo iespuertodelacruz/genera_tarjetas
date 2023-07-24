@@ -1,6 +1,7 @@
 import copy
 import csv
 import datetime
+import operator
 import tempfile
 from pathlib import Path
 
@@ -77,12 +78,14 @@ class Student:
         return int((b - a).days / 365)
 
     @property
-    def age(self) -> int | str:
-        if dage := self.data['Edad']:
-            return int(dage)
-        return settings.EMPTY_FIELD_PLACEHOLDER
+    def age(self) -> int:
+        try:
+            return int(self.data['Edad'])
+        except ValueError:
+            return 0
 
-    def is_adult(self):
+    @property
+    def adult(self):
         return self.age >= 18
 
     @property
@@ -123,9 +126,11 @@ class Student:
                 return ''
 
     @property
-    @fix_empty_field()
     def list_number(self):
-        return self.data['Nº Lista']
+        try:
+            return int(self.data['Nº Lista'])
+        except ValueError:
+            return 0
 
     @property
     def pic(self):
@@ -146,6 +151,9 @@ class Student:
         qr_path = tempfile.NamedTemporaryFile().name
         img.save(qr_path)
         return Path(qr_path)
+
+    def __repr__(self):
+        return self.fullname
 
 
 class StudentRepository:
@@ -172,3 +180,21 @@ class StudentRepository:
     def all(self):
         self.read_pointer = 0
         return self
+
+    def filter(self, **kwargs):
+        self.filtered_data = copy.deepcopy(self.data)
+        for key, value in kwargs.items():
+            if value == [] or value is None:
+                continue
+            value = value if isinstance(value, list) else [value]
+            self.filtered_data = [s for s in self.filtered_data if getattr(s, key) in value]
+        self.read_pointer = 0
+        return self
+
+    def sort(self, *fields):
+        if len(fields) > 0:
+            self.filtered_data.sort(key=operator.attrgetter(*fields))
+        return self
+
+    def __repr__(self):
+        return '\n'.join(str(s) for s in self.data)
