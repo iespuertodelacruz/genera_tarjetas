@@ -12,6 +12,10 @@ html {
   font-family: "Helvetica";
 }
 
+div.student {
+  page-break-after: always;
+}
+
 img.background {
   position: absolute;
   width: 100%;
@@ -27,9 +31,9 @@ img.edu-logo {
 }
 
 img.ies-logo {
-  width: 25mm;
+  width: 22mm;
   position: absolute;
-  left: 30mm;
+  left: 32mm;
   bottom: 0;
 }
 
@@ -44,13 +48,35 @@ div.school-year {
   padding-left: 1mm;
 }
 
+div.title {
+  position: absolute;
+  left: 25mm;
+  top: 2mm;
+  font-size: 11pt;
+  font-weight: bold;
+}
+
 div.group {
   position: absolute;
-  left: 20mm;
-  top: 0;
-  font-size: 13pt;
+  bottom: 8mm;
+  right: 0mm;
+  font-size: 12pt;
   font-weight: bold;
   background-color: purple;
+  color: white;
+  padding-top: 2mm;
+  padding-bottom: 1mm;
+  padding-left: 2mm;
+  padding-right: 2mm;
+  border-radius: 1mm;
+}
+
+div.adult {
+  position: absolute;
+  bottom: 0mm;
+  right: 0mm;
+  font-size: 11pt;
+  background-color: green;
   color: white;
   padding-top: 2mm;
   padding-bottom: 1mm;
@@ -63,25 +89,27 @@ div.name {
   position: absolute;
   left: 0;
   top: 9mm;
-  width: 80mm;
-  overflow: hidden;
   font-size: 11pt;
   font-weight: bold;
+  width: 60mm;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 div.cial {
   position: absolute;
   left: 0;
-  top: 13mm;
-  font-size: 10pt;
+  top: 22mm;
+  font-size: 8pt;
   font-family: "VictorMono";
 }
 
 div.exp {
   position: absolute;
   left: 0;
-  top: 17mm;
-  font-size: 10pt;
+  top: 18mm;
+  font-size: 8pt;
   font-family: "VictorMono";
 }
 
@@ -99,40 +127,35 @@ div.shift {
 div.id {
   position: absolute;
   left: 0;
-  top: 21mm;
+  top: 13mm;
   font-size: 10pt;
   font-family: "VictorMono";
+  font-weight: bold;
 }
 
 div.study {
   position: absolute;
   left: 0;
-  top: 27mm;
-  font-size: 8pt;
+  top: 35mm;
+  font-size: 7pt;
+  width: 60mm;
   color: #5d6d7e;
 }
 
 div.date-of-birth {
   position: absolute;
   left: 0;
-  top: 33mm;
-  font-size: 10pt;
+  top: 26mm;
+  font-size: 8pt;
   font-family: "VictorMono";
 }
 
 div.list-number {
   position: absolute;
   left: 0;
-  top: 37mm;
-  font-size: 10pt;
+  top: 30mm;
+  font-size: 8pt;
   font-family: "VictorMono";
-}
-
-img.adult {
-  position: absolute;
-  bottom: 0mm;
-  right: 0;
-  width: 15mm;
 }
 
 img.profile-pic {

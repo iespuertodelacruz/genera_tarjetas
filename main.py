@@ -4,4 +4,4 @@ from lib.repository import StudentRepository
 
 students = StudentRepository()
 tengine = TemplateEngine(project_dir=settings.PROJECT_DIR, school_year=settings.SCHOOL_YEAR)
-tengine.render(student=students[0])
+tengine.render(students=students[0:100])

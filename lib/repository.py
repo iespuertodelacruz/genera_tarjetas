@@ -42,7 +42,7 @@ class Student:
 
     @property
     def fullname(self):
-        return f'{self.name} {self.surname}'
+        return f'{self.name} {self.surname}'.title()
 
     @property
     def date_of_birth(self):
@@ -81,11 +81,12 @@ class Student:
 
     @property
     def list_number(self):
-        return self.data.get('Nº Lista', settings.EMPTY_FIELD_PLACEHOLDER)
+        return self.data['Nº Lista'] or settings.EMPTY_FIELD_PLACEHOLDER
 
     @property
     def pic(self):
-        return settings.PROFILE_PICS_PATH / (self.exp + '.jpg')
+        # return settings.PROFILE_PICS_PATH / (self.exp + '.jpg')
+        return settings.PROFILE_PICS_PATH / 'pic.jpg'
 
 
 class StudentRepository:
@@ -106,7 +107,7 @@ class StudentRepository:
         self.read_pointer += 1
         return next_data
 
-    def __getitem__(self, index: int) -> Student:
+    def __getitem__(self, index: int | slice) -> Student | list[Student]:
         return self.filtered_data[index]
 
     def all(self):
