@@ -50,7 +50,7 @@ div.school-year {
 
 div.title {
   position: absolute;
-  left: 25mm;
+  left: 28mm;
   top: 2mm;
   font-size: 11pt;
   font-weight: bold;
@@ -187,4 +187,11 @@ div.profile-pic img {
   right: 0;
   bottom: -100%;
   margin: auto;
+}
+
+img.qr {
+  position: absolute;
+  top: 16mm;
+  left: 30mm;
+  width: 18mm;
 }

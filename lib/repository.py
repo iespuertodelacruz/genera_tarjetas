@@ -1,7 +1,10 @@
 import copy
 import csv
 import datetime
+import tempfile
 from pathlib import Path
+
+import qrcode
 
 import settings
 
@@ -133,6 +136,16 @@ class Student:
         else:
             pic_path = settings.ASSETS_IMG_DIR / settings.UNKNOWN_WOMAN_PROFILE_PIC
         return pic_path
+
+    @property
+    def qr(self) -> Path:
+        qr_ = qrcode.QRCode(border=0)
+        qr_.add_data(settings.QR_CONTENT)
+        qr_.make(fit=True)
+        img = qr_.make_image()
+        qr_path = tempfile.NamedTemporaryFile().name
+        img.save(qr_path)
+        return Path(qr_path)
 
 
 class StudentRepository:
