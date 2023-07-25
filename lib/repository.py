@@ -183,7 +183,7 @@ class Student:
             logger.warning(f'🌅 {self} no tiene foto')
 
     def __repr__(self):
-        return self.fullname
+        return f'{self.fullname} ({self.group})'
 
 
 class StudentRepository:
