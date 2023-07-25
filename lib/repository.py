@@ -150,8 +150,12 @@ class Student:
         return settings.PROFILE_PICS_PATH / (self.exp + '.jpg')
 
     @property
+    def has_pic(self) -> bool:
+        return self.pic_path.exists()
+
+    @property
     def pic(self) -> Path:
-        if self.pic_path.exists():
+        if self.has_pic:
             return self.pic_path
         elif self.gender == 'V':
             pic_path = settings.ASSETS_IMG_DIR / settings.UNKNOWN_MAN_PROFILE_PIC
@@ -209,7 +213,7 @@ class StudentRepository:
         return self
 
     def filter(self, **kwargs):
-        logger.debug('Filtering data')
+        logger.debug('Filtrando datos')
         self.filtered_data = copy.deepcopy(self.data)
         for key, value in kwargs.items():
             if value == [] or value is None:
@@ -220,13 +224,13 @@ class StudentRepository:
         return self
 
     def sort(self, *fields):
-        logger.debug('Sorting data')
+        logger.debug('Ordenando datos')
         if len(fields) > 0:
             self.filtered_data.sort(key=operator.attrgetter(*fields))
         return self
 
     def check(self, excluded_fields: list[str] = settings.CHECKING_EXCLUDED_FIELDS):
-        logger.debug('Checking data')
+        logger.debug('Comprobando datos')
         for student in self.filtered_data:
             student.check(excluded_fields)
 

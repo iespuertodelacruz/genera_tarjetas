@@ -22,13 +22,20 @@ def run(
     cial: list[str] = typer.Option([], '--cial', '-c', help='Filtrar por CIAL.'),
     exp: list[str] = typer.Option([], '--exp', '-e', help='Filtrar por expediente.'),
     id: list[str] = typer.Option([], '--id', '-i', help='Filtrar por DNI/NIF/NIE.'),
-    gender: list[str] = typer.Option([], '--gender', '-n', help='Filtrar por género [V/M]'),
+    gender: list[str] = typer.Option(
+        [], '--gender', '-n', help='Filtrar por género [V=Varón/M=Mujer]'
+    ),
     adult: bool = typer.Option(
         None, '--adult/--no-adult', '-d/-D', help='Filtrar por adulto/no adulto.'
     ),
-    shift: list[str] = typer.Option([], '--shift', '-h', help='Filtrar por turno [M/T/N]'),
+    shift: list[str] = typer.Option(
+        [], '--shift', '-h', help='Filtrar por turno [M=Mañana/T=Tarde/N=Noche]'
+    ),
     active: bool = typer.Option(
         None, '--active/--no-active', '-a/-A', help='Filtrar por activo/dado de baja.'
+    ),
+    has_pic: bool = typer.Option(
+        None, '--pic/--no-pic', '-p/-P', help='Filtrar por si tiene foto o no.'
     ),
     sort_by: list[str] = typer.Option(
         ['group', 'list_number', 'surname'], '--sort-by', '-s', help='Ordenar por campos.'
@@ -59,6 +66,7 @@ def run(
         adult=adult,
         short_shift=shift,
         active=active,
+        has_pic=has_pic,
     ).sort(*sort_by)
     filtered_students.check()
     tengine = TemplateEngine(project_dir=settings.PROJECT_DIR, school_year=settings.SCHOOL_YEAR)

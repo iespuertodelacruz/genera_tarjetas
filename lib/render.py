@@ -30,11 +30,11 @@ class TemplateEngine:
     ) -> None:
         template = self.env.get_template(template_name)
         rendered_template_path = NamedTemporaryFile().name
-        logger.debug(f'Rendering template from {template_name}')
+        logger.debug(f'Renderizando plantilla desde {template_name}')
         rendered_template = template.render(**(self.env_vars | args))
         with open(rendered_template_path, 'w') as f:
             f.write(rendered_template)
         rendered_file_path = output_path
         cmd = f'prince {rendered_template_path} -o {rendered_file_path}'
-        logger.debug(f'Writing output to {rendered_file_path}')
+        logger.debug(f'Escribiendo salida a {rendered_file_path}')
         subprocess.run(shlex.split(cmd))
