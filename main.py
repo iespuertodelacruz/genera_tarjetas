@@ -1,16 +1,23 @@
 from pathlib import Path
 
+import logzero
 import typer
 
 import settings
 from lib.render import TemplateEngine
 from lib.repository import StudentRepository
+from lib.utils import init_logger
+
+logger = init_logger()
 
 app = typer.Typer(add_completion=False)
 
 
 @app.command()
 def run(
+    loglevel: str = typer.Option(
+        'DEBUG', '--loglevel', '-l', help='Log level (debug, info, error)'
+    ),
     group: list[str] = typer.Option([], '--group', '-g', help='Filtrar por grupo.'),
     cial: list[str] = typer.Option([], '--cial', '-c', help='Filtrar por CIAL.'),
     exp: list[str] = typer.Option([], '--exp', '-e', help='Filtrar por expediente.'),
@@ -29,6 +36,8 @@ def run(
     output_path: Path = typer.Option(None, '--output', '-o', help='Ruta al fichero de salida.'),
 ):
     '''Generador de tarjetas'''
+    logger.setLevel(getattr(logzero, loglevel.upper()))
+
     students = StudentRepository()
     filtered_students = students.filter(
         group=group,
