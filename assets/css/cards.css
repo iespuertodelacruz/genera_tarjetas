@@ -60,7 +60,7 @@ div.group {
   position: absolute;
   bottom: 8mm;
   right: 0mm;
-  font-size: 12pt;
+  font-size: 11pt;
   font-weight: bold;
   background-color: purple;
   color: white;
@@ -75,7 +75,7 @@ div.adult {
   position: absolute;
   bottom: 0mm;
   right: 0mm;
-  font-size: 11pt;
+  font-size: 10pt;
   background-color: green;
   color: white;
   padding-top: 2mm;
@@ -88,11 +88,11 @@ div.adult {
 div.name {
   position: absolute;
   left: 0;
-  top: 8.5mm;
-  font-size: 11pt;
+  top: 8mm;
+  font-size: 10pt;
   line-height: 12pt;
   font-weight: bold;
-  width: 60mm;
+  width: 58mm;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
@@ -131,7 +131,7 @@ div.id {
   position: absolute;
   left: 0;
   top: 13mm;
-  font-size: 10pt;
+  font-size: 9pt;
   font-family: "VictorMono";
   font-weight: bold;
 }
@@ -166,8 +166,8 @@ div.profile-pic-wrapper {
   right: 0mm;
   top: 0mm;
   margin: 0;
-  width: 18mm;
-  height: 23.5mm;
+  width: 19mm;
+  height: 25mm;
 }
 
 div.profile-pic {
