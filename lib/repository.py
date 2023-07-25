@@ -6,6 +6,7 @@ import tempfile
 from pathlib import Path
 
 import qrcode
+from logzero import logger
 
 import settings
 
@@ -28,51 +29,51 @@ class Student:
 
     @property
     @fix_empty_field()
-    def cial(self):
+    def cial(self) -> str:
         return self.data['CIAL']
 
     @property
     @fix_empty_field()
-    def exp(self):
+    def exp(self) -> str:
         return self.data['Expediente']
 
     @property
     @fix_empty_field()
-    def id(self):
+    def id(self) -> str:
         return self.data['NIF - NIE']
 
     @property
     @fix_empty_field()
-    def name(self):
+    def name(self) -> str:
         return self.data['Nombre']
 
     @property
     @fix_empty_field()
-    def surname1(self):
+    def surname1(self) -> str:
         return self.data['Primer apellido']
 
     @property
     @fix_empty_field('')
-    def surname2(self):
+    def surname2(self) -> str:
         return self.data['Segundo apellido']
 
     @property
-    def surname(self):
+    def surname(self) -> str:
         if self.surname2:
             return f'{self.surname1} {self.surname2}'
         return self.surname1
 
     @property
-    def fullname(self):
+    def fullname(self) -> str:
         return f'{self.name} {self.surname}'.title()
 
     @property
     @fix_empty_field()
-    def date_of_birth(self):
+    def date_of_birth(self) -> str:
         return self.data['Fecha de nacimiento']
 
     @property
-    def calculated_age(self):
+    def calculated_age(self) -> int:
         a = datetime.datetime.strptime(self.date_of_birth, '%d/%m/%Y')
         b = datetime.datetime.now()
         return int((b - a).days / 365)
@@ -85,36 +86,36 @@ class Student:
             return 0
 
     @property
-    def adult(self):
+    def adult(self) -> bool:
         return self.age >= 18
 
     @property
     @fix_empty_field()
-    def study(self):
+    def study(self) -> str:
         return self.data['Estudio den. corta']
 
     @property
     @fix_empty_field()
-    def group(self):
+    def group(self) -> str:
         return self.data['Grupo Clase']
 
     @property
     @fix_empty_field()
-    def gender(self):
+    def gender(self) -> str:
         return self.data['Sexo']
 
     @property
     @fix_empty_field()
-    def shift(self):
+    def shift(self) -> str:
         return self.data['Turnos']
 
     @property
-    def short_shift(self):
+    def short_shift(self) -> str:
         return self.shift[0].upper()
 
     @property
     @fix_empty_field()
-    def long_shift(self):
+    def long_shift(self) -> str:
         match self.short_shift:
             case 'M':
                 return 'Turno de mañana'
@@ -126,28 +127,32 @@ class Student:
                 return ''
 
     @property
-    def list_number(self):
+    def list_number(self) -> int:
         try:
             return int(self.data['Nº Lista'])
         except ValueError:
             return 0
 
     @property
-    def sign_up_date(self):
+    def sign_up_date(self) -> str:
         return self.data['Fecha de matrícula']
 
     @property
-    def sign_out_date(self):
+    def sign_out_date(self) -> str:
         return self.data['Fecha de baja']
 
     @property
-    def active(self):
+    def active(self) -> bool:
         return self.sign_out_date == ''
 
     @property
-    def pic(self):
-        if (pic_path := settings.PROFILE_PICS_PATH / (self.exp + '.jpg')).exists():
-            return pic_path
+    def pic_path(self) -> Path:
+        return settings.PROFILE_PICS_PATH / (self.exp + '.jpg')
+
+    @property
+    def pic(self) -> Path:
+        if self.pic_path.exists():
+            return self.pic_path
         elif self.gender == 'V':
             pic_path = settings.ASSETS_IMG_DIR / settings.UNKNOWN_MAN_PROFILE_PIC
         else:
@@ -164,12 +169,22 @@ class Student:
         img.save(qr_path)
         return Path(qr_path)
 
+    def check(self, excluded_fields: list[str]) -> None:
+        for field, value in self.data.items():
+            if field in excluded_fields:
+                continue
+            if not value:
+                logger.warning(f'❓ {self} no tiene "{field}"')
+        if not self.pic_path.exists():
+            logger.warning(f'🌅 {self} no tiene foto')
+
     def __repr__(self):
         return self.fullname
 
 
 class StudentRepository:
     def __init__(self, data_path: Path = settings.STUDENTS_DATA_PATH):
+        logger.info(f'💽 Cargando datos desde {data_path}')
         with open(data_path, encoding='latin-1') as f:
             reader = csv.DictReader(f, delimiter=';')
             self.data = [Student(row) for row in reader]
@@ -207,6 +222,10 @@ class StudentRepository:
         if len(fields) > 0:
             self.filtered_data.sort(key=operator.attrgetter(*fields))
         return self
+
+    def check(self, excluded_fields: list[str] = settings.CHECKING_EXCLUDED_FIELDS):
+        for student in self.filtered_data:
+            student.check(excluded_fields)
 
     def __repr__(self):
         return '\n'.join(str(s) for s in self.data)

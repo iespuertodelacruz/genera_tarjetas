@@ -49,7 +49,7 @@ def run(
         short_shift=shift,
         active=active,
     ).sort(*sort_by)
-
+    filtered_students.check()
     tengine = TemplateEngine(project_dir=settings.PROJECT_DIR, school_year=settings.SCHOOL_YEAR)
     tengine.render(students=filtered_students, output_path=output_path)
 

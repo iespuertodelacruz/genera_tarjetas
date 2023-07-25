@@ -29,3 +29,7 @@ QR_CONTENT = config('QR_CONTENT', default='https://linktr.ee/iespuertodelacruz')
 LOGFILE = config('LOGFILE', default=PROJECT_DIR / (PROJECT_NAME + '.log'), cast=Path)
 LOGFILE_SIZE = config('LOGFILE_SIZE', cast=float, default=1e6)
 LOGFILE_BACKUP_COUNT = config('LOGFILE_BACKUP_COUNT', cast=int, default=3)
+
+CHECKING_EXCLUDED_FIELDS = config(
+    'CHECKING_EXCLUDED_FIELDS', default='Pasaporte,Fecha de baja', cast=config.list
+)
