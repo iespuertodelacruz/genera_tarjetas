@@ -133,6 +133,18 @@ class Student:
             return 0
 
     @property
+    def sign_up_date(self):
+        return self.data['Fecha de matrícula']
+
+    @property
+    def sign_out_date(self):
+        return self.data['Fecha de baja']
+
+    @property
+    def active(self):
+        return self.sign_out_date == ''
+
+    @property
     def pic(self):
         if (pic_path := settings.PROFILE_PICS_PATH / (self.exp + '.jpg')).exists():
             return pic_path
