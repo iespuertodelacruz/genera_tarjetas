@@ -24,7 +24,7 @@ class TemplateEngine:
     def render(
         self,
         template_name: str = settings.CARDS_TEMPLATE_NAME,
-        output_filename: str = '',
+        output_path: Path = None,
         output_suffix: str = settings.OUTPUT_SUFFIX,
         **args,
     ) -> None:
@@ -33,7 +33,8 @@ class TemplateEngine:
         rendered_template = template.render(**(self.env_vars | args))
         with open(rendered_template_path, 'w') as f:
             f.write(rendered_template)
-        output_filename = output_filename or template_name.split('.')[0] + output_suffix
-        rendered_pdf_path = self.output_dir / output_filename
-        cmd = f'prince {rendered_template_path} -o {rendered_pdf_path}'
+        rendered_file_path = output_path or self.output_dir / (
+            template_name.split('.')[0] + output_suffix
+        )
+        cmd = f'prince {rendered_template_path} -o {rendered_file_path}'
         subprocess.run(shlex.split(cmd))
