@@ -12,7 +12,8 @@ CARDS_OUTPUT_DIR = config('CARDS_OUTPUT_DIR', default=PROJECT_DIR / 'output', ca
 OUTPUT_SUFFIX = config('OUTPUT_SUFFIX', default='.pdf')
 SCHOOL_YEAR = config('SCHOOL_YEAR', default='2023-2024')
 CARDS_TEMPLATE_NAME = config('CARDS_TEMPLATE_NAME', default='cards.jinja')
-STUDENTS_DATA_PATH = config('STUDENTS_DATA_PATH', default=DATA_DIR / 'students.csv')
+STUDENTS_DATA_PATH = config('STUDENTS_DATA_PATH', default=DATA_DIR / 'students.csv', cast=Path)
+CARDS_OUTPUT_PATH = config('CARDS_OUTPUT_PATH', default=CARDS_OUTPUT_DIR / 'cards.pdf', cast=Path)
 EMPTY_FIELD_PLACEHOLDER = config('EMPTY_FIELD_PLACEHOLDER', default='-')
 PROFILE_PICS_PATH = config('PROFILE_PICS_PATH', default=DATA_DIR / 'pics')
 

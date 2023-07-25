@@ -33,12 +33,23 @@ def run(
     sort_by: list[str] = typer.Option(
         ['group', 'list_number', 'surname'], '--sort-by', '-s', help='Ordenar por campos.'
     ),
-    output_path: Path = typer.Option(None, '--output', '-o', help='Ruta al fichero de salida.'),
+    input_path: Path = typer.Option(
+        settings.STUDENTS_DATA_PATH,
+        '--input',
+        '-i',
+        help='Ruta al fichero de datos de entrada (.csv)',
+    ),
+    output_path: Path = typer.Option(
+        settings.CARDS_OUTPUT_PATH,
+        '--output',
+        '-o',
+        help='Ruta al fichero de tarjetas de salida (.pdf)',
+    ),
 ):
     '''Generador de tarjetas'''
     logger.setLevel(getattr(logzero, loglevel.upper()))
 
-    students = StudentRepository()
+    students = StudentRepository(data_path=input_path)
     filtered_students = students.filter(
         group=group,
         cial=cial,

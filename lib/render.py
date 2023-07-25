@@ -4,6 +4,7 @@ from pathlib import Path
 from tempfile import NamedTemporaryFile
 
 import jinja2
+from logzero import logger
 
 import settings
 
@@ -24,17 +25,16 @@ class TemplateEngine:
     def render(
         self,
         template_name: str = settings.CARDS_TEMPLATE_NAME,
-        output_path: Path = None,
-        output_suffix: str = settings.OUTPUT_SUFFIX,
+        output_path: Path = settings.CARDS_OUTPUT_PATH,
         **args,
     ) -> None:
         template = self.env.get_template(template_name)
         rendered_template_path = NamedTemporaryFile().name
+        logger.debug(f'Rendering template from {template_name}')
         rendered_template = template.render(**(self.env_vars | args))
         with open(rendered_template_path, 'w') as f:
             f.write(rendered_template)
-        rendered_file_path = output_path or self.output_dir / (
-            template_name.split('.')[0] + output_suffix
-        )
+        rendered_file_path = output_path
         cmd = f'prince {rendered_template_path} -o {rendered_file_path}'
+        logger.debug(f'Writing output to {rendered_file_path}')
         subprocess.run(shlex.split(cmd))

@@ -184,7 +184,7 @@ class Student:
 
 class StudentRepository:
     def __init__(self, data_path: Path = settings.STUDENTS_DATA_PATH):
-        logger.info(f'💽 Cargando datos desde {data_path}')
+        logger.debug(f'Cargando datos desde {data_path}')
         with open(data_path, encoding='latin-1') as f:
             reader = csv.DictReader(f, delimiter=';')
             self.data = [Student(row) for row in reader]
@@ -209,6 +209,7 @@ class StudentRepository:
         return self
 
     def filter(self, **kwargs):
+        logger.debug('Filtering data')
         self.filtered_data = copy.deepcopy(self.data)
         for key, value in kwargs.items():
             if value == [] or value is None:
@@ -219,11 +220,13 @@ class StudentRepository:
         return self
 
     def sort(self, *fields):
+        logger.debug('Sorting data')
         if len(fields) > 0:
             self.filtered_data.sort(key=operator.attrgetter(*fields))
         return self
 
     def check(self, excluded_fields: list[str] = settings.CHECKING_EXCLUDED_FIELDS):
+        logger.debug('Checking data')
         for student in self.filtered_data:
             student.check(excluded_fields)
 
