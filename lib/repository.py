@@ -12,8 +12,9 @@ import settings
 
 
 class Student:
-    def __init__(self, data: dict[str, str]):
+    def __init__(self, data: dict[str, str], pics_dir: Path):
         self.data = data
+        self.pics_dir = pics_dir
 
     @staticmethod
     def fix_empty_field(default_output=settings.EMPTY_FIELD_PLACEHOLDER):
@@ -147,7 +148,7 @@ class Student:
 
     @property
     def pic_path(self) -> Path:
-        return settings.PROFILE_PICS_PATH / (self.exp + '.jpg')
+        return (self.pics_dir / (self.exp + '.jpg')).resolve()
 
     @property
     def has_pic(self) -> bool:
@@ -187,11 +188,15 @@ class Student:
 
 
 class StudentRepository:
-    def __init__(self, data_path: Path = settings.STUDENTS_DATA_PATH):
+    def __init__(
+        self,
+        data_path: Path = settings.STUDENTS_DATA_PATH,
+        pics_dir: Path = settings.PROFILE_PICS_DIR,
+    ):
         logger.debug(f'Cargando datos desde {data_path}')
         with open(data_path, encoding='latin-1') as f:
             reader = csv.DictReader(f, delimiter=';')
-            self.data = [Student(row) for row in reader]
+            self.data = [Student(row, pics_dir) for row in reader]
             self.filtered_data = copy.deepcopy(self.data)
         self.read_pointer = 0
 

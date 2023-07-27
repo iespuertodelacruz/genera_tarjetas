@@ -52,11 +52,17 @@ def run(
         '-o',
         help='Ruta al fichero de tarjetas de salida (.pdf)',
     ),
+    pics_dir: Path = typer.Option(
+        settings.PROFILE_PICS_DIR,
+        '--pics-dir',
+        '-r',
+        help='Ruta al directorio donde se encuentran las fotos de perfil.',
+    ),
 ):
     '''Generador de tarjetas'''
     logger.setLevel(getattr(logzero, loglevel.upper()))
 
-    students = StudentRepository(data_path=input_path)
+    students = StudentRepository(data_path=input_path, pics_dir=pics_dir)
     filtered_students = students.filter(
         group=group,
         cial=cial,
