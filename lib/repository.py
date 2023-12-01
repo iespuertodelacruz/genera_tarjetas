@@ -12,9 +12,10 @@ import settings
 
 
 class Student:
-    def __init__(self, data: dict[str, str], pics_dir: Path):
+    def __init__(self, data: dict[str, str], pics_dir: Path, adult_ref_date: datetime.date = None):
         self.data = data
         self.pics_dir = pics_dir
+        self.adult_ref_date = adult_ref_date or datetime.date.today()
 
     @staticmethod
     def fix_empty_field(default_output=settings.EMPTY_FIELD_PLACEHOLDER):
@@ -69,26 +70,32 @@ class Student:
         return f'{self.name} {self.surname}'.title()
 
     @property
-    @fix_empty_field()
-    def date_of_birth(self) -> str:
-        return self.data['Fecha de nacimiento']
+    def birthdate(self) -> datetime.date:
+        return datetime.datetime.strptime(self.data['Fecha de nacimiento'], '%d/%m/%Y').date()
 
     @property
-    def calculated_age(self) -> int:
-        a = datetime.datetime.strptime(self.date_of_birth, '%d/%m/%Y')
-        b = datetime.datetime.now()
-        return int((b - a).days / 365)
+    @fix_empty_field('')
+    def fbirthdate(self) -> str:
+        return self.birthdate.strftime('%d/%m/%Y')
 
     @property
     def age(self) -> int:
-        try:
-            return int(self.data['Edad'])
-        except ValueError:
-            return 0
+        return int((self.adult_ref_date - self.birthdate).days / 365)
 
     @property
-    def adult(self) -> bool:
-        return self.age >= 18
+    def date_when_become_adult(self) -> datetime.date:
+        return self.birthdate + datetime.timedelta(days=18 * 365)
+
+    @property
+    def adult(self):
+        return self.become_adult_in_date_range()
+
+    def become_adult_in_date_range(
+        self, since_date: datetime.date = None, to_date: datetime.date = None
+    ) -> bool:
+        since_date = since_date or self.adult_ref_date
+        to_date = to_date or datetime.date.today()
+        return since_date <= self.date_when_become_adult <= to_date
 
     @property
     @fix_empty_field()
@@ -192,11 +199,13 @@ class StudentRepository:
         self,
         data_path: Path = settings.STUDENTS_DATA_PATH,
         pics_dir: Path = settings.PROFILE_PICS_DIR,
+        adult_ref_date: datetime.date = None,
     ):
         logger.debug(f'Cargando datos desde {data_path}')
+        adult_ref_date = adult_ref_date or datetime.date.today()
         with open(data_path, encoding='latin-1') as f:
             reader = csv.DictReader(f, delimiter=';')
-            self.data = [Student(row, pics_dir) for row in reader]
+            self.data = [Student(row, pics_dir, adult_ref_date) for row in reader]
             self.filtered_data = copy.deepcopy(self.data)
         self.read_pointer = 0
 

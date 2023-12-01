@@ -1,3 +1,4 @@
+import datetime
 from pathlib import Path
 
 import logzero
@@ -37,6 +38,12 @@ def run(
     has_pic: bool = typer.Option(
         None, '--pic/--no-pic', '-p/-P', help='Filtrar por si tiene foto o no.'
     ),
+    adult_ref_date: str = typer.Option(
+        datetime.date(year=1900, month=1, day=1),
+        '--adult-ref-date',
+        '-e',
+        help='El alumnado se considerará adulto si el día que cumpla 18 años está comprendido entre este valor y la fecha de hoy.',
+    ),
     sort_by: list[str] = typer.Option(
         ['group', 'list_number', 'surname'], '--sort-by', '-s', help='Ordenar por campos.'
     ),
@@ -59,10 +66,14 @@ def run(
         help='Ruta al directorio donde se encuentran las fotos de perfil.',
     ),
 ):
-    '''Generador de tarjetas'''
+    """Generador de tarjetas"""
     logger.setLevel(getattr(logzero, loglevel.upper()))
 
-    students = StudentRepository(data_path=input_path, pics_dir=pics_dir)
+    students = StudentRepository(
+        data_path=input_path,
+        pics_dir=pics_dir,
+        adult_ref_date=datetime.datetime.strptime(adult_ref_date, '%Y-%m-%d').date(),
+    )
     filtered_students = students.filter(
         group=group,
         cial=cial,
@@ -79,5 +90,5 @@ def run(
     tengine.render(students=filtered_students, output_path=output_path)
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     app()
