@@ -54,7 +54,7 @@ Options:
   -h, --shift TEXT                Filtrar por turno [M=Mañana/T=Tarde/N=Noche]
   -a, --active / -A, --no-active  Filtrar por activo/dado de baja.
   -p, --pic / -P, --no-pic        Filtrar por si tiene foto o no.
-  -e, --adult-ref-date TEXT       El alumnado se considerará adulto si el día
+  -f, --adult-ref-date TEXT       El alumnado se considerará adulto si el día
                                   que cumpla 18 años está comprendido entre
                                   este valor y la fecha de hoy.  [default:
                                   1900-01-01]

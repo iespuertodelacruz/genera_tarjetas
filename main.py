@@ -41,7 +41,7 @@ def run(
     adult_ref_date: str = typer.Option(
         datetime.date(year=1900, month=1, day=1),
         '--adult-ref-date',
-        '-e',
+        '-f',
         help='El alumnado se considerará adulto si el día que cumpla 18 años está comprendido entre este valor y la fecha de hoy.',
     ),
     sort_by: list[str] = typer.Option(
