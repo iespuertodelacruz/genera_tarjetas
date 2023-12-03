@@ -6,3 +6,5 @@ data
 .python-version
 .artwork
 *.log*
+.venv
+.env

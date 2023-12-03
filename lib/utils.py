@@ -23,5 +23,6 @@ def init_logger():
         maxBytes=settings.LOGFILE_SIZE,
         backupCount=settings.LOGFILE_BACKUP_COUNT,
         formatter=file_formatter,
+        encoding='utf-8',
     )
     return logzero.logger

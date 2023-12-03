@@ -32,9 +32,9 @@ class TemplateEngine:
         rendered_template_path = NamedTemporaryFile().name
         logger.debug(f'Renderizando plantilla desde {template_name}')
         rendered_template = template.render(**(self.env_vars | args))
-        with open(rendered_template_path, 'w') as f:
+        with open(rendered_template_path, 'w', encoding='utf-8') as f:
             f.write(rendered_template)
         rendered_file_path = output_path
-        cmd = f'prince {rendered_template_path} -o {rendered_file_path}'
+        cmd = f'"{settings.PRINCE_PATH}" "{rendered_template_path}" -o "{rendered_file_path}"'
         logger.debug(f'Escribiendo salida a {rendered_file_path}')
         subprocess.run(shlex.split(cmd))

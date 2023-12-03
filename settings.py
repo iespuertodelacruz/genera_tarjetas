@@ -34,3 +34,5 @@ LOGFILE_BACKUP_COUNT = config('LOGFILE_BACKUP_COUNT', cast=int, default=3)
 CHECKING_EXCLUDED_FIELDS = config(
     'CHECKING_EXCLUDED_FIELDS', default='Pasaporte,Fecha de baja', cast=config.list
 )
+
+PRINCE_PATH = config('PRINCE_PATH', default='prince')
