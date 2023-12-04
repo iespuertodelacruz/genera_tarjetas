@@ -2,6 +2,11 @@
 
 Herramienta para generar tarjetas del alumnado del [IES Puerto de la Cruz - Telesforo Bravo](http://iespto.es).
 
+[Requisitos previos](#requisitos-previos)  
+[Configuración](#configuración)  
+[Datos de entrada](#datos-de-entrada)  
+[Modo de uso](#modo-de-uso)
+
 ## Requisitos previos
 
 1. [Python >= 3.10](https://www.python.org/downloads/)
@@ -34,6 +39,31 @@ pip install -r requirements.txt
    Por ejemplo, si estamos en Windows deberíamos definir algo como:
 
    `PRINCE_PATH=C:\Program Files (x86)\Prince\engine\bin\prince`
+
+## Datos de entrada
+
+Hay dos tipos de datos de entrada necesarios para que la herramienta funcione adecuadamente:
+
+1. Información del alumnado en formato `.csv` (consulta que sale de EKADE) con los campos:
+   - CIAL
+   - Expediente
+   - NIF - NIE
+   - Pasaporte
+   - Nombre
+   - Primer apellido
+   - Segundo apellido
+   - Sexo
+   - Fecha de nacimiento
+   - Edad
+   - Enseñanza
+   - Estudio den. larga
+   - Estudio den. corta
+   - Turnos
+   - Grupo Clase
+   - Nº Lista
+   - Fecha de matrícula
+   - Fecha de baja
+2. Fotografías de perfil del alumnado dentro de una carpeta con nombres de fichero en formato `<Expediente>.jpg`.
 
 ## Modo de uso
 
