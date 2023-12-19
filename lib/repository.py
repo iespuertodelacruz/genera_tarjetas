@@ -222,6 +222,9 @@ class StudentRepository:
     def __getitem__(self, index: int | slice) -> Student | list[Student]:
         return self.filtered_data[index]
 
+    def __len__(self):
+        return len(self.filtered_data)
+
     def all(self):
         self.read_pointer = 0
         return self

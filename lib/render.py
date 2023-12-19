@@ -1,3 +1,4 @@
+import datetime
 import shlex
 import subprocess
 from pathlib import Path
@@ -13,7 +14,9 @@ class TemplateEngine:
     def __init__(
         self,
         templates_dir: Path = settings.TEMPLATES_DIR,
-        output_dir: Path = settings.CARDS_OUTPUT_DIR,
+        output_dir: Path = settings.OUTPUT_DIR,
+        project_dir: Path = settings.PROJECT_DIR,
+        school_year: str = settings.SCHOOL_YEAR,
         **env_vars,
     ):
         loader = jinja2.FileSystemLoader(templates_dir)
@@ -21,6 +24,9 @@ class TemplateEngine:
         self.output_dir = output_dir
         self.output_dir.mkdir(parents=True, exist_ok=True)
         self.env_vars = env_vars
+        self.env_vars.update(
+            dict(project_dir=project_dir, school_year=school_year, today=datetime.datetime.today())
+        )
 
     def render(
         self,

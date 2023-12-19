@@ -38,6 +38,9 @@ def run(
     has_pic: bool = typer.Option(
         None, '--pic/--no-pic', '-p/-P', help='Filtrar por si tiene foto o no.'
     ),
+    as_list: bool = typer.Option(
+        False, '--as-list', '-t', help='Volcar listado de alumnado en vez de tarjetas.'
+    ),
     adult_ref_date: str = typer.Option(
         datetime.date(year=1900, month=1, day=1),
         '--adult-ref-date',
@@ -86,8 +89,11 @@ def run(
         has_pic=has_pic,
     ).sort(*sort_by)
     filtered_students.check()
-    tengine = TemplateEngine(project_dir=settings.PROJECT_DIR, school_year=settings.SCHOOL_YEAR)
-    tengine.render(students=filtered_students, output_path=output_path)
+    tengine = TemplateEngine()
+    template_name = settings.LIST_TEMPLATE_NAME if as_list else settings.CARDS_TEMPLATE_NAME
+    if as_list and output_path == settings.CARDS_OUTPUT_PATH:
+        output_path = settings.LIST_OUTPUT_PATH
+    tengine.render(template_name=template_name, output_path=output_path, students=filtered_students)
 
 
 if __name__ == '__main__':

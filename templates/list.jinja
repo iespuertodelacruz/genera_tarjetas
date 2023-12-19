@@ -1,0 +1,31 @@
+<html lang="es">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="{{ project_dir }}/assets/css/fonts.css" type="text/css" />
+    <link rel="stylesheet" href="{{ project_dir }}/assets/css/list.css" type="text/css" />
+</head>
+
+<body>
+    <h1>genera_tarjetas (<code>--as-list</code>)</h1>
+    <img class="ies-logo" src="{{ project_dir }}/assets/img/ies_logo.svg" />
+    <p>Hay un total de <b>{{ students|length }} fotos</b> pendientes a fecha <b>{{ today.strftime('%d/%m/%Y') }}</b> para la consulta realizada:</p>
+    <table>
+        <tr>
+            <th>Grupo</th>
+            <th>Nombre y apellidos</th>
+            <th>Exp.</th>
+            <th>Id. foto</th>
+        </tr>
+    {% for student in students %}
+        <tr>
+            <td>{{ student.group }}</td>
+            <td>{{ student.fullname }}</td>
+            <td>{{ student.exp }}</td>
+            <td class="placeholder"></td>
+        </tr>
+    {% endfor %}
+    </table>
+</body>
+
+</html>

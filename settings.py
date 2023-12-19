@@ -7,13 +7,15 @@ PROJECT_NAME = PROJECT_DIR.name
 DATA_DIR = PROJECT_DIR / 'data'
 
 TEMPLATES_DIR = config('TEMPLATES_DIR', default=PROJECT_DIR / 'templates', cast=Path)
-CARDS_OUTPUT_DIR = config('CARDS_OUTPUT_DIR', default=PROJECT_DIR / 'output', cast=Path)
+OUTPUT_DIR = config('OUTPUT_DIR', default=PROJECT_DIR / 'output', cast=Path)
 
 OUTPUT_SUFFIX = config('OUTPUT_SUFFIX', default='.pdf')
 SCHOOL_YEAR = config('SCHOOL_YEAR', default='2023-2024')
-CARDS_TEMPLATE_NAME = config('CARDS_TEMPLATE_NAME', default='cards.jinja')
 STUDENTS_DATA_PATH = config('STUDENTS_DATA_PATH', default=DATA_DIR / 'students.csv', cast=Path)
-CARDS_OUTPUT_PATH = config('CARDS_OUTPUT_PATH', default=CARDS_OUTPUT_DIR / 'cards.pdf', cast=Path)
+CARDS_TEMPLATE_NAME = config('CARDS_TEMPLATE_NAME', default='cards.jinja')
+CARDS_OUTPUT_PATH = config('CARDS_OUTPUT_PATH', default=OUTPUT_DIR / 'cards.pdf', cast=Path)
+LIST_TEMPLATE_NAME = config('LIST_TEMPLATE_NAME', default='list.jinja')
+LIST_OUTPUT_PATH = config('LIST_OUTPUT_PATH', default=OUTPUT_DIR / 'list.pdf', cast=Path)
 EMPTY_FIELD_PLACEHOLDER = config('EMPTY_FIELD_PLACEHOLDER', default='-')
 PROFILE_PICS_DIR = config('PROFILE_PICS_DIR', default=DATA_DIR / 'pics')
 

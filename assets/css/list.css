@@ -1,0 +1,23 @@
+html {
+  font-family: "Helvetica";
+}
+
+table {
+  border-collapse: collapse;
+}
+
+table td {
+  border: 0.5mm solid black;
+  padding: 1mm;
+}
+
+table td.placeholder {
+  width: 2cm;
+}
+
+img.ies-logo {
+  width: 40mm;
+  position: absolute;
+  right: -10mm;
+  top: -10mm;
+}
