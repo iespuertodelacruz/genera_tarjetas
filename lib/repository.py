@@ -96,10 +96,7 @@ class Student:
     ) -> bool:
         since_date = since_date or self.adult_ref_date
         to_date = to_date or datetime.date.today()
-        aux = since_date <= self.date_when_become_adult <= to_date
-        if aux:
-            print(since_date, self.date_when_become_adult, to_date)
-        return aux
+        return since_date <= self.date_when_become_adult <= to_date
 
     @property
     @fix_empty_field()
