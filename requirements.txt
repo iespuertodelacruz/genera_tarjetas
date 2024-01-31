@@ -3,3 +3,4 @@ prettyconf
 qrcode
 typer
 logzero
+python-dateutil

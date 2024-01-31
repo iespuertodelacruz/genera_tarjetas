@@ -6,6 +6,7 @@ import tempfile
 from pathlib import Path
 
 import qrcode
+from dateutil.relativedelta import relativedelta
 from logzero import logger
 
 import settings
@@ -84,7 +85,7 @@ class Student:
 
     @property
     def date_when_become_adult(self) -> datetime.date:
-        return self.birthdate + datetime.timedelta(days=18 * 365)
+        return self.birthdate + relativedelta(years=18)
 
     @property
     def adult(self):
@@ -95,7 +96,10 @@ class Student:
     ) -> bool:
         since_date = since_date or self.adult_ref_date
         to_date = to_date or datetime.date.today()
-        return since_date <= self.date_when_become_adult <= to_date
+        aux = since_date <= self.date_when_become_adult <= to_date
+        if aux:
+            print(since_date, self.date_when_become_adult, to_date)
+        return aux
 
     @property
     @fix_empty_field()
