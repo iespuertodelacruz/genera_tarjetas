@@ -1,3 +1,4 @@
+import datetime
 from pathlib import Path
 
 from prettyconf import config
@@ -38,3 +39,4 @@ CHECKING_EXCLUDED_FIELDS = config(
 )
 
 PRINCE_PATH = config('PRINCE_PATH', default='prince')
+EPOCH_DATE = datetime.date.fromtimestamp(0)

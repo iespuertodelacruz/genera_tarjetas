@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import copy
 import csv
 import datetime
@@ -163,6 +165,13 @@ class Student:
         return self.pic_path.exists()
 
     @property
+    def pic_mod(self) -> datetime.date:
+        try:
+            return datetime.date.fromtimestamp(self.pic_path.stat().st_mtime)
+        except FileNotFoundError:
+            return settings.EPOCH_DATE
+
+    @property
     def pic(self) -> Path:
         if self.has_pic:
             return self.pic_path
@@ -187,12 +196,55 @@ class Student:
             if field in excluded_fields:
                 continue
             if not value:
-                logger.warning(f'❓ {self} no tiene "{field}"')
+                logger.warning(f'[DATO] {self} no tiene "{field}"')
         if not self.pic_path.exists():
-            logger.warning(f'🌅 {self} no tiene foto')
+            logger.warning(f'[FOTO] {self} no tiene foto')
 
     def __repr__(self):
         return f'{self.fullname} ({self.group})'
+
+
+class StudentQuery:
+    def __init__(self, data: list):
+        self.data = data
+
+    def filter_equals(self, **kwargs) -> StudentQuery:
+        logger.debug('Filtrando datos =')
+        filtered_data = copy.deepcopy(self.data)
+        for key, value in kwargs.items():
+            if value == [] or value is None:
+                continue
+            value = value if isinstance(value, list) else [value]
+            filtered_data = [s for s in filtered_data if getattr(s, key) in value]
+        return StudentQuery(filtered_data)
+
+    def filter_gte(self, **kwargs) -> StudentQuery:
+        logger.debug('Filtrando datos >=')
+        filtered_data = copy.deepcopy(self.data)
+        for key, value in kwargs.items():
+            filtered_data = [s for s in filtered_data if getattr(s, key) >= value]
+        return StudentQuery(filtered_data)
+
+    def sorted(self, *fields) -> StudentQuery:
+        logger.debug('Ordenando datos')
+        if len(fields) > 0:
+            sorted_data = sorted(copy.deepcopy(self.data), key=operator.attrgetter(*fields))
+        return StudentQuery(sorted_data)
+
+    def check(self, excluded_fields: list[str] = settings.CHECKING_EXCLUDED_FIELDS) -> None:
+        logger.debug('Comprobando datos')
+        for student in self.data:
+            student.check(excluded_fields)
+
+    def __getitem__(self, index: int | slice) -> Student | list[Student]:
+        return self.data[index]
+
+    def __len__(self):
+        return len(self.data)
+
+    def __iter__(self):
+        for student in self.data:
+            yield student
 
 
 class StudentRepository:
@@ -207,50 +259,10 @@ class StudentRepository:
         with open(data_path, encoding='latin-1') as f:
             reader = csv.DictReader(f, delimiter=';')
             self.data = [Student(row, pics_dir, adult_ref_date) for row in reader]
-            self.filtered_data = copy.deepcopy(self.data)
-        self.read_pointer = 0
 
-    def __iter__(self):
-        return self
-
-    def __next__(self):
-        if self.read_pointer >= len(self.filtered_data):
-            raise StopIteration()
-        next_data = self.filtered_data[self.read_pointer]
-        self.read_pointer += 1
-        return next_data
-
-    def __getitem__(self, index: int | slice) -> Student | list[Student]:
-        return self.filtered_data[index]
-
-    def __len__(self):
-        return len(self.filtered_data)
-
-    def all(self):
-        self.read_pointer = 0
-        return self
-
-    def filter(self, **kwargs):
-        logger.debug('Filtrando datos')
-        self.filtered_data = copy.deepcopy(self.data)
-        for key, value in kwargs.items():
-            if value == [] or value is None:
-                continue
-            value = value if isinstance(value, list) else [value]
-            self.filtered_data = [s for s in self.filtered_data if getattr(s, key) in value]
-        self.read_pointer = 0
-        return self
-
-    def sort(self, *fields):
-        logger.debug('Ordenando datos')
-        if len(fields) > 0:
-            self.filtered_data.sort(key=operator.attrgetter(*fields))
-        return self
-
-    def check(self, excluded_fields: list[str] = settings.CHECKING_EXCLUDED_FIELDS):
-        logger.debug('Comprobando datos')
-        for student in self.filtered_data:
-            student.check(excluded_fields)
+    @property
+    def query(self):
+        return StudentQuery(self.data)
 
     def __repr__(self):
         return '\n'.join(str(s) for s in self.data)
