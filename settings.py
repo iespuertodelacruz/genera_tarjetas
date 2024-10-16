@@ -11,7 +11,6 @@ TEMPLATES_DIR = config('TEMPLATES_DIR', default=PROJECT_DIR / 'templates', cast=
 OUTPUT_DIR = config('OUTPUT_DIR', default=PROJECT_DIR / 'output', cast=Path)
 
 OUTPUT_SUFFIX = config('OUTPUT_SUFFIX', default='.pdf')
-SCHOOL_YEAR = config('SCHOOL_YEAR', default='2023-2024')
 STUDENTS_DATA_PATH = config('STUDENTS_DATA_PATH', default=DATA_DIR / 'students.csv', cast=Path)
 CARDS_TEMPLATE_NAME = config('CARDS_TEMPLATE_NAME', default='cards.jinja')
 CARDS_OUTPUT_PATH = config('CARDS_OUTPUT_PATH', default=OUTPUT_DIR / 'cards.pdf', cast=Path)

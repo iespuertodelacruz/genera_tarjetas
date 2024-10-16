@@ -13,10 +13,10 @@ import settings
 class TemplateEngine:
     def __init__(
         self,
+        school_year: str,
         templates_dir: Path = settings.TEMPLATES_DIR,
         output_dir: Path = settings.OUTPUT_DIR,
         project_dir: Path = settings.PROJECT_DIR,
-        school_year: str = settings.SCHOOL_YEAR,
         **env_vars,
     ):
         loader = jinja2.FileSystemLoader(templates_dir)

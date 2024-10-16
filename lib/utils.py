@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import datetime
+
 import logzero
 
 import settings
@@ -28,3 +30,13 @@ def init_logger():
         encoding='utf-8',
     )
     return logzero.logger
+
+
+def get_school_year() -> str:
+    SCHOOL_YEAR_STARTING_MONTH = 9
+
+    today = datetime.date.today()
+    if SCHOOL_YEAR_STARTING_MONTH <= today.month <= 12:
+        return f'{today.year}-{today.year + 1}'
+    else:
+        return f'{today.year-1}-{today.year}'

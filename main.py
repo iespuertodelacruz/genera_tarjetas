@@ -7,7 +7,7 @@ import typer
 import settings
 from lib.render import TemplateEngine
 from lib.repository import StudentRepository
-from lib.utils import init_logger
+from lib.utils import get_school_year, init_logger
 
 logger = init_logger()
 
@@ -18,6 +18,12 @@ app = typer.Typer(add_completion=False)
 def run(
     loglevel: str = typer.Option(
         'DEBUG', '--loglevel', '-l', help='Log level (debug, info, error)'
+    ),
+    school_year=typer.Option(
+        get_school_year,
+        '--school-year',
+        '-y',
+        help='Curso escolar. Calcula automáticamente el curso escolar actual.',
     ),
     group: list[str] = typer.Option([], '--group', '-g', help='Filtrar por grupo.'),
     cial: list[str] = typer.Option([], '--cial', '-c', help='Filtrar por CIAL.'),
@@ -109,7 +115,7 @@ def run(
         .sorted(*sort_by)
     )
     filtered_students.check()
-    tengine = TemplateEngine()
+    tengine = TemplateEngine(school_year=school_year)
     template_name = settings.LIST_TEMPLATE_NAME if as_list else settings.CARDS_TEMPLATE_NAME
     if as_list and output_path == settings.CARDS_OUTPUT_PATH:
         output_path = settings.LIST_OUTPUT_PATH
